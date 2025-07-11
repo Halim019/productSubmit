@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Order Form</title>
+</head>
+<body>
+    <h2>Product Order Form</h2>
+    <form id="orderForm">
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br>
+
+        <label>Product:</label><br>
+        <input type="text" name="product" required><br>
+
+        <label>Quantity:</label><br>
+        <input type="number" name="quantity" required><br><br>
+
+        <button type="submit">Place Order</button>
+    </form>
+
+    <p id="response"></p>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwuyff4Lgz1S1S-H8yRp2qGGK9baQZZ8xCqUEOxH0x3OYDFx_UXVxu9RvUn0qf__ZNC4Q/exec';
+        const form = document.getElementById('orderForm');
+        const responseMsg = document.getElementById('response');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    responseMsg.innerHTML = 'Order placed successfully!';
+                    form.reset();
+                })
+                .catch(error => {
+                    responseMsg.innerHTML = 'Error placing order. Please try again.';
+                });
+        });
+    </script>
+</body>
+</html>
